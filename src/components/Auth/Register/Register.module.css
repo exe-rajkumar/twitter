@@ -1,0 +1,124 @@
+.root {
+  width: 100vw;
+  height: 100vh;
+  box-sizing: border-box;
+  overflow: hidden;
+  position: fixed;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.card {
+  width: 800px;
+  height: 500px;
+  border-radius: 10px;
+  overflow: hidden;
+  display: flex;
+  justify-content: flex-end;
+  box-shadow: 0px 0px 20px #5e9eff;
+  background-image: url("./../../../assets/register.svg");
+  background-repeat: no-repeat;
+}
+.login_card {
+  height: 100%;
+  width: 50%;
+  background-color: white;
+  padding: 15px 10px 10px 5px;
+}
+.brand {
+  height: 15%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.brand > img {
+  display: flex;
+}
+.brand > p {
+  font-size: 25px;
+  font-weight: 900;
+}
+.pageHeader {
+  height: 12.5%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.pageHeader > p {
+  font-size: 20px;
+  font-weight: bolder;
+}
+.login_container {
+  height: 50%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.button_container {
+  height: 15%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.label {
+  margin-top: 15px;
+  text-align: left;
+}
+.label_continous {
+  margin-top: 15px;
+  text-align: left;
+}
+.valid_button {
+  background-color: #03a9f4;
+  border: none;
+  border-radius: 5px;
+  color: white;
+  font-size: 14px;
+  font-weight: 700;
+  padding: 10px 10px;
+  transition: all 0.2s ease-in-out;
+  margin-right: 10px;
+}
+.valid_button:hover {
+  background-color: black;
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.3);
+  color: white;
+  cursor: pointer;
+  -webkit-transform: translateY(-2px);
+  transform: translateY(-2px);
+}
+.register {
+  position: absolute;
+  top: 0;
+  margin-top: 10px;
+  margin-right: 10px;
+  right: 0;
+  z-index: 99999;
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+.register_button {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  background-color: #03a9f4;
+  border: none;
+  border-radius: 10px;
+  color: white;
+  font-size: 15px;
+  font-weight: 700;
+  padding: 10px 10px;
+  transition: all 0.2s ease-in-out;
+  margin-left: 10px;
+}
+.register_button:hover {
+  background-color: black;
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.3);
+  color: white;
+  cursor: pointer;
+  -webkit-transform: translateY(-2px);
+  transform: translateY(-2px);
+}
