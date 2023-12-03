@@ -4,6 +4,7 @@ import { TextField } from "@mui/material";
 import styles from "./Register.module.css";
 import Logo from "./../../../assets/twitter.svg";
 import RegisterImage from "./../../../assets/doodle.svg";
+import { Link } from "react-router-dom";
 
 export default function Register() {
   const containerStyles = {
@@ -42,7 +43,7 @@ export default function Register() {
                   <TextField
                     id="firstname"
                     size="small"
-                    placeholder="Enter First Name"
+                    placeholder="First Name"
                     type="text"
                     autoComplete="false"
                     // value={email}
@@ -59,7 +60,7 @@ export default function Register() {
                   <TextField
                     id="username"
                     size="small"
-                    placeholder="Enter username"
+                    placeholder="Username"
                     type="text"
                     autoComplete="false"
                     // value={email}
@@ -77,7 +78,7 @@ export default function Register() {
                   <TextField
                     id="password"
                     size="small"
-                    placeholder="Enter Password"
+                    placeholder="Password"
                     type="password"
                     autoComplete="false"
                     // value={email}
@@ -96,7 +97,7 @@ export default function Register() {
                   <TextField
                     id="lastname"
                     size="small"
-                    placeholder="Enter Last Name"
+                    placeholder="Last Name"
                     type="text"
                     // value={catchword}
                     // onChange={(e) => setCatchWord(e.target.value)}
@@ -112,7 +113,7 @@ export default function Register() {
                   <TextField
                     id="email"
                     size="small"
-                    placeholder="Enter Email-Id"
+                    placeholder="Email-Id"
                     type="email"
                     // value={catchword}
                     // onChange={(e) => setCatchWord(e.target.value)}
@@ -145,7 +146,9 @@ export default function Register() {
       </div>
       <div className={styles.register}>
         <p style={{ fontSize: "15px" }}>Already Registered?</p>
-        <button className={styles.register_button}>LOGIN</button>
+        <Link to="/auth/login" style={{ textDecoration: "none" }}>
+          <button className={styles.register_button}>LOGIN</button>
+        </Link>
       </div>
     </div>
   );
