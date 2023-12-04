@@ -1,4 +1,4 @@
-import { React, useState } from "react";
+import { React, useState, useEffect } from "react";
 import FormControl from "@mui/material/FormControl";
 import { TextField } from "@mui/material";
 import styles from "./Login.module.css";
@@ -6,10 +6,30 @@ import Logo from "./../../../assets/twitter.svg";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import CircularProgress from "@mui/material/CircularProgress";
+import Alert from "@mui/material/Alert";
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [catchword, setCatchWord] = useState("");
+  const [loginStatus, setLoginStatus] = useState(false);
+  const [error, setError] = useState(false);
+  const loginCriteria = () => {
+    return email !== "" && catchword !== "";
+  };
+  const resetLoginInputs = () => {
+    setEmail("");
+    setCatchWord("");
+  };
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setError(false);
+      setEmail("");
+      setCatchWord("");
+    }, 5000);
+    return () => clearTimeout(timer);
+  }, [error]);
   const containerStyles = {
     singleFormContainer: {
       minWidth: 120,
@@ -19,7 +39,7 @@ export default function Login() {
 
   const navigate = useNavigate();
   const handleLogin = async (e) => {
-    // setLoginStatus(true);
+    setLoginStatus(true);
     console.log("1");
     e.preventDefault();
     try {
@@ -32,29 +52,18 @@ export default function Login() {
       );
       if (response.request.status === 200) {
         console.log(response.data);
-        localStorage.setItem("id", response.data.employee_id);
-        localStorage.setItem("config_role", response.data.employee_config_role);
-        localStorage.setItem("first_name", response.data.employee_first_name);
-        localStorage.setItem("last_name", response.data.employee_last_name);
-        localStorage.setItem("email_id", response.data.employee_email_id);
-        localStorage.setItem("manager_id", response.data.employee_manager_id);
-        localStorage.setItem(
-          "phone_number",
-          response.data.employee_phone_number
-        );
-        localStorage.setItem("designation", response.data.employee_designation);
-        localStorage.setItem(
-          "profile_picture",
-          response.data.employee_profile_picture
-        );
-        localStorage.setItem("isLoggedIn", "true");
-        // setLoginStatus(false);
+        localStorage.setItem("id", response.data.user_id);
+        localStorage.setItem("firstName", response.data.user_first_name);
+        localStorage.setItem("lastName", response.data.user_last_name);
+        localStorage.setItem("username", response.data.user_username);
+        localStorage.setItem("email_id", response.data.user_email_address);
+        localStorage.setItem("profilePhoto", response.data.user_profile_picture);
         navigate("/dashboard/home");
       }
     } catch (error) {
       console.log(error);
-      // setLoginStatus(false);
-      // setError(true);
+      setLoginStatus(false);
+      setError(true);
     }
   };
   return (
@@ -110,12 +119,36 @@ export default function Login() {
               </FormControl>
             </div>
           </div>
-          <div className={styles.button_container}>
-            <button className={styles.valid_button} onClick={handleLogin}>
-              LOGIN
-            </button>
-            <button className={styles.valid_button}>RESET</button>
-          </div>
+          {error && (
+            <div className={styles.alert_file_div}>
+              <div style={{ width: "80%" }}>
+                <Alert severity="error">401: Wrong Credentials</Alert>
+              </div>
+            </div>
+          )}
+          {loginStatus ? (
+            <div style={{ width: "100%", textAlign: "center" }}>
+              <CircularProgress />
+            </div>
+          ) : (
+            <div className={styles.button_container}>
+              <button
+                onClick={handleLogin}
+                disabled={!loginCriteria()}
+                className={
+                  loginCriteria() ? styles.valid_button : styles.disabled_button
+                }
+              >
+                LOGIN
+              </button>
+              <button
+                className={styles.valid_button}
+                onClick={resetLoginInputs}
+              >
+                RESET
+              </button>
+            </div>
+          )}
         </div>
       </div>
       <div className={styles.register}>

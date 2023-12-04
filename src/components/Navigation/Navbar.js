@@ -9,6 +9,7 @@ import { MenuItems } from "./MenuItems";
 export default function Navbar() {
   const location = useLocation();
   const navigate = useNavigate();
+  const profilePicture = localStorage.getItem("profilePhoto");
   const logOutFunction = () => {
     localStorage.clear();
     navigate("/");
@@ -48,10 +49,11 @@ export default function Navbar() {
       </ul>
       <div>
         <img
-          className={styles.navbarLogo}
-          src={twitter}
-          width="100%"
-          alt="logo"
+          className={styles.profilePicture}
+          src={profilePicture}
+          width="40px"
+          height="40px"
+          alt="profilePhoto"
         ></img>
       </div>
     </nav>

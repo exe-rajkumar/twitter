@@ -1,17 +1,79 @@
-import React from "react";
+import React, { useState } from "react";
 import FormControl from "@mui/material/FormControl";
 import { TextField } from "@mui/material";
 import styles from "./Register.module.css";
 import Logo from "./../../../assets/twitter.svg";
 import RegisterImage from "./../../../assets/doodle.svg";
 import { Link } from "react-router-dom";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import CircularProgress from "@mui/material/CircularProgress";
 
 export default function Register() {
+  const [registerStatus, setRegisterStatus] = useState(false);
+  const [error, setError] = useState(false);
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
+  const [catchword, setCatchword] = useState("");
+  const [confirmCatchword, setConfirmCatchword] = useState("");
+  const navigate = useNavigate();
+  const registrationCriteria = () => {
+    return (
+      firstName !== "" &&
+      lastName !== "" &&
+      email !== "" &&
+      username != "" &&
+      catchword != "" &&
+      confirmCatchword !== "" &&
+      catchword == confirmCatchword
+    );
+  };
+  const resetRegistrationInputs = () => {
+    setEmail("");
+    setCatchword("");
+    setFirstName("");
+    setLastName("");
+    setCatchword("");
+    setConfirmCatchword("");
+    setUsername("");
+  };
   const containerStyles = {
     singleFormContainer: {
       minWidth: 120,
       width: "100%",
     },
+  };
+  const handleRegistration = async (e) => {
+    setRegisterStatus(true);
+    console.log("1");
+    e.preventDefault();
+    try {
+      const response = await axios.post(
+        "https://6rect2sfu7.execute-api.ap-south-1.amazonaws.com/twitter-signup",
+        {
+          firstName,
+          lastName,
+          username,
+          email,
+          catchword,
+        }
+      );
+      if (response.request.status === 200) {
+        localStorage.setItem("id", response.data.user_id);
+        localStorage.setItem("firstName", response.data.user_first_name);
+        localStorage.setItem("lastName", response.data.user_last_name);
+        localStorage.setItem("username", response.data.user_username);
+        localStorage.setItem("email_id", response.data.user_email_address);
+        localStorage.setItem("profilePhoto", response.data.user_profile_picture);
+        navigate("/dashboard/home");
+      }
+    } catch (error) {
+      console.log(error);
+      setRegisterStatus(false);
+      setError(true);
+    }
   };
   return (
     <div className={styles.root}>
@@ -46,8 +108,8 @@ export default function Register() {
                     placeholder="First Name"
                     type="text"
                     autoComplete="false"
-                    // value={email}
-                    // onChange={(e) => setEmail(e.target.value)}
+                    value={firstName}
+                    onChange={(e) => setFirstName(e.target.value)}
                   />
                 </FormControl>
                 <div className={styles.label}>
@@ -63,8 +125,8 @@ export default function Register() {
                     placeholder="Username"
                     type="text"
                     autoComplete="false"
-                    // value={email}
-                    // onChange={(e) => setEmail(e.target.value)}
+                    value={username}
+                    onChange={(e) => setUsername(e.target.value)}
                   />
                 </FormControl>
 
@@ -81,8 +143,8 @@ export default function Register() {
                     placeholder="Password"
                     type="password"
                     autoComplete="false"
-                    // value={email}
-                    // onChange={(e) => setEmail(e.target.value)}
+                    value={catchword}
+                    onChange={(e) => setCatchword(e.target.value)}
                   />
                 </FormControl>
               </div>
@@ -99,8 +161,8 @@ export default function Register() {
                     size="small"
                     placeholder="Last Name"
                     type="text"
-                    // value={catchword}
-                    // onChange={(e) => setCatchWord(e.target.value)}
+                    value={lastName}
+                    onChange={(e) => setLastName(e.target.value)}
                   />
                 </FormControl>
                 <div className={styles.label_continous}>
@@ -115,8 +177,8 @@ export default function Register() {
                     size="small"
                     placeholder="Email-Id"
                     type="email"
-                    // value={catchword}
-                    // onChange={(e) => setCatchWord(e.target.value)}
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
                   />
                 </FormControl>
                 <div className={styles.label_continous}>
@@ -127,21 +189,44 @@ export default function Register() {
                   sx={{ marginTop: "5px" }}
                 >
                   <TextField
-                    id="password"
+                    id="confirmpassword"
                     size="small"
                     placeholder="Confirm Password"
                     type="password"
-                    // value={catchword}
-                    // onChange={(e) => setCatchWord(e.target.value)}
+                    value={confirmCatchword}
+                    onChange={(e) => setConfirmCatchword(e.target.value)}
                   />
                 </FormControl>
               </div>
             </div>
           </div>
-          <div className={styles.button_container}>
-            <button className={styles.valid_button}>SIGNUP</button>
-            <button className={styles.valid_button}>RESET</button>
-          </div>
+          {registerStatus ? (
+            <div
+              style={{ width: "100%", textAlign: "center", marginTop: "20px" }}
+            >
+              <CircularProgress />
+            </div>
+          ) : (
+            <div className={styles.button_container}>
+              <button
+                disabled={!registrationCriteria()}
+                className={
+                  registrationCriteria()
+                    ? styles.valid_button
+                    : styles.disabled_button
+                }
+                onClick={handleRegistration}
+              >
+                SIGNUP
+              </button>
+              <button
+                className={styles.valid_button}
+                onClick={resetRegistrationInputs}
+              >
+                RESET
+              </button>
+            </div>
+          )}
         </div>
       </div>
       <div className={styles.register}>

@@ -11,6 +11,11 @@
   width: 45px;
   height: 45px;
 }
+.profilePhoto {
+  cursor: pointer;
+  width: 35px;
+  height: 35px;
+}
 
 .navMenu {
   display: grid;
@@ -34,8 +39,8 @@
   align-items: center;
 }
 .navLinks div span {
-    margin-left: 5px;
-  }
+  margin-left: 5px;
+}
 .navLinkStyles {
   padding: 0.5rem 0.5rem;
   text-decoration: none;
