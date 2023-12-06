@@ -1,11 +1,9 @@
 .app {
   position: fixed;
-  overflow: hidden;
+  /* overflow: hidden; */
   width: 100%;
 }
 .content {
-  position: fixed;
-  overflow: hidden;
   width: 100%;
   padding: 10px;
 }

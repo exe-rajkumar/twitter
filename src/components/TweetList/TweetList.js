@@ -29,19 +29,57 @@ const TweetList = () => {
   }, []);
 
   return (
-    <div>
-      <ul>
-        {tweets.map((tweet) => (
-          <li key={tweet.tweet_id}>
-            <p>{tweet.user_profile_picture}</p>
-            <p>{tweet.user_first_name}</p>
-            <p>{tweet.user_last_name}</p>
-            <p>{tweet.user_username}</p>
-            <p>{tweet.tweet_text}</p>
-            {/* <p>Tweet Time: {tweet.tweet_time}</p> */}
-          </li>
-        ))}
-      </ul>
+    <div
+      style={{
+        width: "100%",
+        marginTop: "10px",
+        display: "flex",
+        justifyContent: "center",
+      }}
+    >
+      <div style={{ width: "75%" }}>
+        <ul style={{ listStyle: "none" }}>
+          {tweets.map((tweet) => (
+            <li key={tweet.tweet_id}>
+              <div
+                style={{
+                  width: "400px",
+                  height: "100px",
+                }}
+              >
+                <div>
+                  <div
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      padding: "5px",
+                    }}
+                  >
+                    <img
+                      src={tweet.user_profile_picture}
+                      width="35px"
+                      height="35px"
+                    />
+                    <div style={{ marginLeft: "7.5px", display: "flex" }}>
+                      <b>
+                        {tweet.user_first_name}
+                        <span> </span>
+                        {tweet.user_last_name}
+                      </b>
+                      <p style={{ marginLeft: "5px", fontSize: "15px" }}>
+                        @{tweet.user_username}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <div style={{ marginLeft: "50px" }}>
+                  <p>{tweet.tweet_text}</p>
+                </div>
+              </div>
+            </li>
+          ))}
+        </ul>
+      </div>
     </div>
   );
 };

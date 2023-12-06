@@ -13,6 +13,7 @@ import Explore from "./components/Explore/Explore";
 import Notification from "./components/Notification/Notification";
 import Message from "./components/Message/Message";
 import Profile from "./components/Profile/Profile";
+import ProfilePicture from "./components/ProfilePicture/ProfilePicture";
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
           <Route path="/dashboard/notification" element={<Notification />} />
           <Route path="/dashboard/message" element={<Message />} />
           <Route path="/dashboard/profile" element={<Profile />} />
+          <Route path="/dashboard/img-upload" element={<ProfilePicture />} />
         </Route>
         <Route path="/auth/login" element={<Login />} />
         <Route path="/auth/register" element={<Register />} />
